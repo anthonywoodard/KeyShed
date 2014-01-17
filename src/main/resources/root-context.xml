@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+			
+    <context:annotation-config />
+    <context:property-placeholder location="database.properties" />	
+		
+    <bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">
+        <property name="driverClassName" value="${database.driverClassName}" />		
+        <property name="url" value="${database.url}" />		
+        <property name="username" value="${database.username}" />
+        <property name="password" value="${database.password}" />
+    </bean>		
+	  
+    <bean id="UserDAOImpl" class="com.anthonywoodard.keyshed.dao.UserDAOImpl">
+        <!--property name="dataSource" ref="dataSource"></property-->
+    </bean>
+    
+    <bean id="UserService" class="com.anthonywoodard.keyshed.service.UserService">
+        <property name="userDao" ref="UserDAOImpl" />
+    </bean>
+    
+    <bean id="UserTerminal" class="com.anthonywoodard.keyshed.terminal.UserTerminal" />
+    
+    <bean id="UserController" class="com.anthonywoodard.keyshed.controller.UserController">
+        <property name="userView" ref="UserTerminal" />
+        <property name="userService" ref="UserService" />
+    </bean>
+    
+    <bean id="KeyDAOImpl" class="com.anthonywoodard.keyshed.dao.KeyDAOImpl">
+        <!--property name="dataSource" ref="dataSource"></property-->
+    </bean>
+    
+    <bean id="KeyService" class="com.anthonywoodard.keyshed.service.KeyService">
+        <property name="keyDao" ref="KeyDAOImpl" />
+    </bean>
+    
+    <bean id="KeyTerminal" class="com.anthonywoodard.keyshed.terminal.KeyTerminal" />
+    
+    <bean id="KeyController" class="com.anthonywoodard.keyshed.controller.KeyController">
+        <property name="keyView" ref="KeyTerminal" />
+        <property name="keyService" ref="KeyService" />
+        <property name="userController" ref="UserController" />
+    </bean>
+    
+</beans>
