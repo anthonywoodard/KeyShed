@@ -30,12 +30,12 @@ elif [ "$1" = "uninstall" ]; then
     echo "Uninstall complete."
   fi
 elif [ "$1" = "help" ]; then
-  echo "KeyShed is a command line tool for storing access credentials."
-  echo "Start KeyShed by typing keyshed at the prompt or type keyshed with the following options:"
+  echo "KeyShed is a Java-based command line tool that stores access credentials for the Mac."
+  echo "Start KeyShed by typing keyshed at the prompt or type keyshed with one of the following options:"
   echo "backup [directory] - backup the KeyShed database to a directory"
   echo "help"
   echo "recover - recover the KeyShed database from an internal copy"
-  echo "restore [file]  - restore the KeyShed database from a file"
+  echo "restore [file]  - restore the KeyShed database using another KeyShed database file"
   echo "timestamp - display the last time the KeyShed database was moved"
   echo "uninstall"
 else

@@ -72,7 +72,8 @@ public class Terminal {
     }
     
     public void showHelp() {
-    c.format("\nFormat: command -[parameter]\n\n");
+    c.format("\n\nKeyShed Help\n\n");
+    c.format("Command Format: command -[parameter]\n\n");
     c.format("User Commands:\n" +
       "     user -del\n" +
       "     user -list\n" +
@@ -80,20 +81,20 @@ public class Terminal {
       "     user -new\n" +
       "     user -password\n" +
       "     user -register\n\n");
-    c.format("Key Shed CRUD Parameters:  (c-category i-id p-password t-title u-username w-url)\n\n");      
-    c.format("Key Shed CRUD Commands: \n" +
-      "     copy -i=[] || -t=[] (title must be unique. will copy password to clipboard)\n" +
+    c.format("CRUD Parameters:  (c-category i-id p-password t-title u-username w-url)\n\n");      
+    c.format("CRUD Commands: \n" +
+      "     copy -i=[] || -t=[] (title must be unique. will copy password to clipboard.)\n" +
       "     del -i=[] || -t=[] (title must be unique)\n" +
       "     find -i=[] || -c=[] || -t=[]\n" +      
       "     list (table view)\n" +
       "     llist (list view)\n" +
       "     new (Required: -t=[] && -u=[] && -p=[]) (Optional: -c=[] || -w=[])\n" +
       "     update (Required: -i=[]) (Optional: -c=[] || -p=[] || -u=[] || -w=[] || -t=[])\n\n");
-    c.format("Key Shed Export Parameter: (f-file to export to)\n\n");
-    c.format("Key Shed Export Command: \n" +
+    c.format("Export Parameter: (f-file to export to)\n\n");
+    c.format("Export Command: \n" +
       "     export (Required: -f=[])\n\n");
-    c.format("Key Shed Import Parameters: ([f-csv file to import] [r-first row contains column headers])\n\n");
-    c.format("Key Shed Import Command: \n" +
+    c.format("Import Parameters: ([f-csv file to import] [r-first row contains column headers])\n\n");
+    c.format("Import Command: \n" +
       "     import (Required: -f=[] && -r=[true || false])\n\n");
     c.format("General Commands:\n" +
       "     help\n" +
