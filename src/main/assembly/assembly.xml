@@ -39,6 +39,7 @@
             <outputDirectory></outputDirectory>
             <includes>                
                 <include>install.*</include>
+                <include>update.*</include>
             </includes>
         </fileSet>        
         <!-- adds jar package to the root directory of zip package -->

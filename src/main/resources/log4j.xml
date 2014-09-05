@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.questmedium.fb">
+	<logger name="com.anthonywoodard.keyshed">
 		<level value="info" />
 	</logger>
 	

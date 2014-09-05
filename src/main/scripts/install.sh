@@ -5,8 +5,23 @@ f1=/usr/local/bin
 f2=~/.keyshed
 
 if [ -d "$f2" ]; then
-  echo "\033[0;33mYou already have KeyShed installed.\033[0m You'll need to remove ~/.keyshed if you want to install."
-  exit
+  echo "\033[0;33mYou already have KeyShed installed. Do you want to uninstall?\033[0m"  
+  echo "\033[0;33mType Y or N: \033[0m\c"
+  read line
+  if [ "$line" = Y ] || [ "$line" = y ]; then
+    echo "\033[0;33mPlease note uninstall will remove all files including the database.\033[0m"
+    echo "\033[0;33mDo you want to continue?\033[0m\c"
+    read line2
+    if [ "$line2" = Y ] || [ "$line2" = y ]; then
+      rm -rf $f1/keyshed
+      rm -rf $f2
+      echo "Uninstall complete... Continuing with installation..."
+    else
+      exit
+    fi
+  else
+    exit
+  fi  
 fi
 
 #use internal field separator to loop $PATH

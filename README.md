@@ -21,17 +21,9 @@ These instructions assume you have Apache Maven installed.
 
     cd /path/to/KeyShed
 		
-3. Execute the exeScript.sh script
+3. Execute the exeScript.sh script (Update will not overwrite database)
 
-    sh exeScript.sh
-    
-4. Navigate to the target/KeyShed directory
-    
-    cd target/KeyShed
-
-5. Execute the install.sh script
-        
-    sh install.sh
+    sh exeScript.sh    
 
 Start
 -------
