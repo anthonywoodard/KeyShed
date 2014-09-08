@@ -2,7 +2,6 @@ package com.anthonywoodard.keyshed.terminal;
 
 import com.anthonywoodard.keyshed.domain.User;
 import com.anthonywoodard.keyshed.view.UserView;
-import java.io.Console;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
  */
 public class UserTerminal extends Terminal implements UserView {
   
-  private Console c;
+  private TextDevice  c;
       
   public UserTerminal() {    
     c = this.getConsole();

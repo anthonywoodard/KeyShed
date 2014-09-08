@@ -8,7 +8,6 @@ import com.anthonywoodard.keyshed.util.EncUtil;
 import com.anthonywoodard.keyshed.util.ReadCSV;
 import com.anthonywoodard.keyshed.view.KeyView;
 import java.io.BufferedWriter;
-import java.io.Console;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,8 +23,8 @@ import java.util.List;
  * @author Anthony Woodard
  */
 public class KeyTerminal extends Terminal implements KeyView {
-  
-  private Console c;
+    
+  private TextDevice c;
       
   public KeyTerminal() {    
     c = this.getConsole();

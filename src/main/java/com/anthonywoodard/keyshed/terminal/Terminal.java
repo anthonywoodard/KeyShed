@@ -1,7 +1,6 @@
 package com.anthonywoodard.keyshed.terminal;
 
 import com.anthonywoodard.keyshed.util.EncUtil;
-import java.io.Console;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -19,15 +18,11 @@ import org.slf4j.LoggerFactory;
  */
 public class Terminal {
     
-  final Logger logger = LoggerFactory.getLogger(Terminal.class);
-    private Console c;        
+  final Logger logger = LoggerFactory.getLogger(Terminal.class);   
+    private final TextDevice c;
     
     public Terminal() {
-      c = System.console();
-      if (c == null) {
-        System.err.println("No console.");
-        System.exit(1);
-      }      
+      c = TextDevices.defaultTextDevice();
     }
     
     public String initOption(Boolean canRegister) {        
@@ -55,7 +50,7 @@ public class Terminal {
         return promptValue;
     }
     
-    public Console getConsole() {
+    public TextDevice getConsole() {
         return this.c;
     }
     
