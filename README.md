@@ -93,6 +93,13 @@ General Commands:
     * quit
     * exit
     
-  
+Architecture
+------  
+
+View <--> Controller <--> Service <--> Model
+
+KeyShed employs the Model View Controller (MVC) pattern to make it easier to implement
+different views in the future.  Additionally, the Service and Data Access Object (DAO) patterns 
+are used to manage the business logic and data access operations respectively.
 
       
