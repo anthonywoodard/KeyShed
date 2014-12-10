@@ -6,6 +6,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidParameterSpecException;
+import java.util.ResourceBundle;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -20,9 +21,15 @@ public class Terminal {
     
   final Logger logger = LoggerFactory.getLogger(Terminal.class);   
     private final TextDevice c;
+    private ResourceBundle rb;
+    private String applicationName;
+    private String applicationVersion;
     
     public Terminal() {
       c = TextDevices.defaultTextDevice();
+      rb = ResourceBundle.getBundle("application");
+      applicationName = rb.getString("application.name");
+      applicationVersion = rb.getString("application.version");
     }
     
     public String initOption(Boolean canRegister) {        
@@ -67,7 +74,8 @@ public class Terminal {
     }
     
     public void showHelp() {
-    c.format("\n\nKeyShed Help\n\n");
+    c.format("\n\n" + applicationName + " Help\n\n");
+    c.format("v" + applicationVersion + "\n\n");
     c.format("Command Format: command -[parameter]\n\n");
     c.format("User Commands:\n" +
       "     user -del\n" +
@@ -98,7 +106,7 @@ public class Terminal {
   }
     
   public void showSplash() {
-    System.out.println("KeyShed Baby!!!");
+    System.out.println(applicationName + " v" + applicationVersion);
   }
     
   public byte[] encrypt(String ctext) {  
