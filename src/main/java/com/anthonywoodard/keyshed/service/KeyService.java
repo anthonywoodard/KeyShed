@@ -46,6 +46,7 @@ public class KeyService {
           key.setIsInError(Constants.NOT_IN_ERROR);
           key.setStatusCode(Constants.SUCCESS);        
         } else {
+          key.setKeyId(keys.get(0).getKeyId());
           key.setIsInError(Constants.IS_IN_ERROR);
           key.setStatusCode(Constants.KEY_EXISTS);
         }
@@ -61,7 +62,7 @@ public class KeyService {
     }
     
     public List<Key> getKey(Key key) {
-      List<Key> keys = new ArrayList();
+      List<Key> keys = new ArrayList<Key>();
       if((key.getKeyTitle() != null && key.getKeyTitle().length > 0)) {
         keys = keyDao.select(key.getKeyTitle());
       } else if(key.getKeyId() > -1) {
@@ -71,7 +72,7 @@ public class KeyService {
     }
     
     public List<Key> findKey(Key key) {
-      List<Key> keys = new ArrayList();
+      List<Key> keys = new ArrayList<Key>();
       if((key.getKeyTitle() != null && key.getKeyTitle().length > 0)) {
         keys = this.findPattern(this.decrypt(key.getKeyTitle()), "title");
       } else if((key.getKeyCategory() != null && key.getKeyCategory().length > 0)) {
@@ -97,7 +98,7 @@ public class KeyService {
     }
     
     public Key deleteKey(Key key) {
-      List<Key> keys = new ArrayList();
+      List<Key> keys = new ArrayList<Key>();
       if((key.getKeyTitle() != null && key.getKeyTitle().length > 0)) {
         keys = keyDao.select(key.getKeyTitle());
       } else if(key.getKeyId() > -1) {
@@ -150,8 +151,8 @@ public class KeyService {
     }
     
     public HashMap<String, List<Key>> importKeys(List<Key> keys) { 
-      List<Key> goodKeys = new ArrayList();
-      List<Key> badKeys = new ArrayList();      
+      List<Key> goodKeys = new ArrayList<Key>();
+      List<Key> badKeys = new ArrayList<Key>();      
       for(int i=0; i < keys.size(); i++) {
         Key key = keys.get(i);
         if((key.getKeyUsername() != null && key.getKeyUsername().length > 0) && 
@@ -169,8 +170,8 @@ public class KeyService {
       } else {
         for(int i=0; i < goodKeys.size(); i++) {           
           Key key = this.createKey(goodKeys.get(i));
-          if(!key.getStatusCode().equals(Constants.KEY_EXISTS)) {
-            this.updateKey(this.getKey(key).get(0));
+          if(key.getStatusCode().equals(Constants.KEY_EXISTS)) {
+            this.updateKey(key);
           }
         }
       }
@@ -203,7 +204,7 @@ public class KeyService {
     }
     
     private List<Key> findPattern(String pattern, String dataParam) {
-      List<Key> keys = new ArrayList();
+      List<Key> keys = new ArrayList<Key>();
       int totalRows = keyDao.count();        
       int limit = 10;
       int offset = 0;              

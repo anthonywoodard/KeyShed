@@ -53,7 +53,7 @@ public class KeyController {
     } else if(command.equals("help")) {
       this.doCommand(showHelp());
     } else if(!command.equals("quit") && !command.equals("exit")) {       
-      ArrayList<String> params = new ArrayList();      
+      ArrayList<String> params = new ArrayList<String>();      
       try {
         for(int i=1; i < cmds.length; i++) {
           params.add(cmds[i]);
