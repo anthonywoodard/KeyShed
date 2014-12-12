@@ -2,24 +2,15 @@ package com.anthonywoodard.keyshed.service;
 
 import com.anthonywoodard.keyshed.dao.KeyDAO;
 import com.anthonywoodard.keyshed.domain.Key;
-import com.anthonywoodard.keyshed.terminal.Terminal;
 import com.anthonywoodard.keyshed.util.Constants;
 import com.anthonywoodard.keyshed.util.EncUtil;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import org.apache.commons.collections4.comparators.ComparatorChain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Anthony Woodard
  */
 public class KeyService {
-  final Logger logger = LoggerFactory.getLogger(Terminal.class);
+  final Logger logger = LoggerFactory.getLogger(KeyService.class);
   private KeyDAO keyDao;
     
     public void setKeyDao(KeyDAO keyDao) {
@@ -107,9 +98,9 @@ public class KeyService {
     public List<Key> findKey(Key key) {
       List<Key> keys = new ArrayList<Key>();
       if((key.getKeyTitle() != null && key.getKeyTitle().length > 0)) {
-        keys = this.findPattern(this.decrypt(key.getKeyTitle()), "title");
+        keys = this.findPattern(EncUtil.decrypt(key.getKeyTitle()), "title");
       } else if((key.getKeyCategory() != null && key.getKeyCategory().length > 0)) {
-        keys = this.findPattern(this.decrypt(key.getKeyCategory()), "category");
+        keys = this.findPattern(EncUtil.decrypt(key.getKeyCategory()), "category");
       } else if(key.getKeyId() > -1) {
         keys = keyDao.select(key.getKeyId());
       }
@@ -126,7 +117,7 @@ public class KeyService {
         key = keys.get(0);
         key.setIsInError(Constants.NOT_IN_ERROR);
         key.setStatusCode(Constants.SUCCESS);
-        this.copyToClipboard(this.decrypt(key.getKeyPassword()));
+        this.copyToClipboard(EncUtil.decrypt(key.getKeyPassword()));
       }
       return key;            
     }
@@ -211,31 +202,6 @@ public class KeyService {
       }
       return hm;
     }
-        
-    private String decrypt(byte[] ctext) {
-      String dtext = null;
-      try {
-        dtext = EncUtil.decryptMsg(ctext);
-      } catch (NoSuchPaddingException ex) {
-        logger.error(ex.toString()); 
-      } catch (NoSuchAlgorithmException ex) {
-        logger.error(ex.toString()); 
-      } catch (InvalidParameterSpecException ex) {
-        logger.error(ex.toString()); 
-      } catch (InvalidAlgorithmParameterException ex) {
-        logger.error(ex.toString()); 
-      } catch (InvalidKeyException ex) {
-        logger.error(ex.toString()); 
-      } catch (BadPaddingException ex) {
-        logger.error(ex.toString()); 
-      } catch (IllegalBlockSizeException ex) {
-        logger.error(ex.toString()); 
-      } catch (UnsupportedEncodingException ex) {
-        logger.error(ex.toString()); 
-      }
-      return dtext;
-
-    }
     
     private List<Key> findPattern(String pattern, String dataParam) {
       List<Key> keys = new ArrayList<Key>();
@@ -248,9 +214,9 @@ public class KeyService {
           Key k = searchKeys.get(i);
           String data = "";
           if (dataParam.equals("title")) {
-            data = this.decrypt(k.getKeyTitle()).toLowerCase();
+            data = EncUtil.decrypt(k.getKeyTitle()).toLowerCase();
           } else if (dataParam.equals("category")) {
-            data = this.decrypt(k.getKeyCategory()).toLowerCase();
+            data = EncUtil.decrypt(k.getKeyCategory()).toLowerCase();
           }
           if (data.contains(pattern.toLowerCase())) {
             keys.add(k);

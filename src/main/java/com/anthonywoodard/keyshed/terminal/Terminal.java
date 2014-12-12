@@ -1,15 +1,7 @@
 package com.anthonywoodard.keyshed.terminal;
 
 import com.anthonywoodard.keyshed.util.EncUtil;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidParameterSpecException;
 import java.util.ResourceBundle;
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,8 +10,8 @@ import org.slf4j.LoggerFactory;
  * @author Anthony Woodard
  */
 public class Terminal {
-    
-  final Logger logger = LoggerFactory.getLogger(Terminal.class);   
+	
+	final Logger logger = LoggerFactory.getLogger(Terminal.class);   
     private final TextDevice c;
     private ResourceBundle rb;
     private String applicationName;
@@ -109,51 +101,11 @@ public class Terminal {
     System.out.println(applicationName + " v" + applicationVersion);
   }
     
-  public byte[] encrypt(String ctext) {  
-    byte[] etext = null;
-    try {                
-      etext = EncUtil.encryptMsg(ctext);
-    } catch (NoSuchAlgorithmException ex) {
-      logger.error(ex.toString()); 
-    } catch (NoSuchPaddingException ex) {
-      logger.error(ex.toString()); 
-    } catch (InvalidKeyException ex) {
-      logger.error(ex.toString()); 
-    } catch (InvalidParameterSpecException ex) {
-      logger.error(ex.toString()); 
-    } catch (IllegalBlockSizeException ex) {
-      logger.error(ex.toString()); 
-    } catch (BadPaddingException ex) {
-      logger.error(ex.toString()); 
-    } catch (UnsupportedEncodingException ex) {
-      logger.error(ex.toString()); 
-    }
-
-    return etext;
+  public byte[] encrypt(String ctext) {
+	  return EncUtil.encrypt(ctext);
   }
 
   public String decrypt(byte[] ctext) {
-    String dtext = null;
-    try {
-      dtext = EncUtil.decryptMsg(ctext);
-    } catch (NoSuchPaddingException ex) {
-      logger.error(ex.toString()); 
-    } catch (NoSuchAlgorithmException ex) {
-      logger.error(ex.toString()); 
-    } catch (InvalidParameterSpecException ex) {
-      logger.error(ex.toString()); 
-    } catch (InvalidAlgorithmParameterException ex) {
-      logger.error(ex.toString()); 
-    } catch (InvalidKeyException ex) {
-      logger.error(ex.toString()); 
-    } catch (BadPaddingException ex) {
-      logger.error(ex.toString()); 
-    } catch (IllegalBlockSizeException ex) {
-      logger.error(ex.toString()); 
-    } catch (UnsupportedEncodingException ex) {
-      logger.error(ex.toString()); 
-    }
-    return dtext;
-
+	  return EncUtil.decrypt(ctext);
   }
 }

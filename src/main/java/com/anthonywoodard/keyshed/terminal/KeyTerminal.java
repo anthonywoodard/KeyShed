@@ -17,13 +17,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Anthony Woodard
  */
 public class KeyTerminal extends Terminal implements KeyView {
-    
+  
+  final Logger logger = LoggerFactory.getLogger(KeyTerminal.class);  
   private TextDevice c;
       
   public KeyTerminal() {    
