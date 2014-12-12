@@ -16,6 +16,8 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -23,6 +25,7 @@ import javax.crypto.spec.SecretKeySpec;
  */
 
 public class EncUtil {
+  final static Logger logger = LoggerFactory.getLogger(EncUtil.class);
   private static SecretKeySpec secret;
   private static Random rnd = new Random();
   
@@ -82,5 +85,51 @@ public class EncUtil {
         sb.append((rnd.nextInt(10)));        
     }
     return sb.toString();
+  }
+  
+  public static byte[] encrypt(String ctext) {  
+    byte[] etext = null;
+    try {                
+      etext = EncUtil.encryptMsg(ctext);
+    } catch (NoSuchAlgorithmException ex) {
+      logger.error(ex.toString()); 
+    } catch (NoSuchPaddingException ex) {
+      logger.error(ex.toString()); 
+    } catch (InvalidKeyException ex) {
+      logger.error(ex.toString()); 
+    } catch (InvalidParameterSpecException ex) {
+      logger.error(ex.toString()); 
+    } catch (IllegalBlockSizeException ex) {
+      logger.error(ex.toString()); 
+    } catch (BadPaddingException ex) {
+      logger.error(ex.toString()); 
+    } catch (UnsupportedEncodingException ex) {
+      logger.error(ex.toString()); 
+    }
+    return etext;
+  }
+  
+  public static String decrypt(byte[] ctext) {
+    String dtext = null;
+    try {
+      dtext = EncUtil.decryptMsg(ctext);
+    } catch (NoSuchPaddingException ex) {
+      logger.error(ex.toString()); 
+    } catch (NoSuchAlgorithmException ex) {
+      logger.error(ex.toString()); 
+    } catch (InvalidParameterSpecException ex) {
+      logger.error(ex.toString()); 
+    } catch (InvalidAlgorithmParameterException ex) {
+      logger.error(ex.toString()); 
+    } catch (InvalidKeyException ex) {
+      logger.error(ex.toString()); 
+    } catch (BadPaddingException ex) {
+      logger.error(ex.toString()); 
+    } catch (IllegalBlockSizeException ex) {
+      logger.error(ex.toString()); 
+    } catch (UnsupportedEncodingException ex) {
+      logger.error(ex.toString()); 
+    }
+    return dtext;
   }
 }

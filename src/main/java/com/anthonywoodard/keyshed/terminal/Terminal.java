@@ -88,9 +88,9 @@ public class Terminal {
     c.format("CRUD Commands: \n" +
       "     copy -i=[] || -t=[] (title must be unique. will copy password to clipboard.)\n" +
       "     del -i=[] || -t=[] (title must be unique)\n" +
-      "     find -i=[] || -c=[] || -t=[]\n" +      
-      "     list (table view)\n" +
-      "     llist (list view)\n" +
+      "     find -i=[] || -c=[] || -t=[] (Default Sort: Ascending by category, title)\n" +      
+      "     list (table view) (Default Sort: Ascending by category, title) (Optional Sort Parameters: -o=i || -o=c,p,t,u,w)\n" +
+      "     llist (list view) (Default Sort: Ascending by category, title)\n" +
       "     new (Required: -t=[] && -u=[] && -p=[]) (Optional: -c=[] || -w=[])\n" +
       "     update (Required: -i=[]) (Optional: -c=[] || -p=[] || -u=[] || -w=[] || -t=[])\n\n");
     c.format("Export Parameter: (f-file to export to)\n\n");

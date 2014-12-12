@@ -16,4 +16,5 @@ public interface KeyView extends View {
   public void showHelp();
   public List<Key> importKeys(List<String> params);
   public void exportKeys(List<String> params, List<Key> keys);
+  public List<String> listKeys(List<String> params);
 }

@@ -14,11 +14,13 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import org.apache.commons.collections4.comparators.ComparatorChain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,6 +73,37 @@ public class KeyService {
       return keys;
     }
     
+    public List<Key> listKeys(List<String> orderBy) {
+    	List<Key> keys = new ArrayList<Key>();
+    	keys = keyDao.select();
+    	if (!orderBy.contains("id")) {    		    		
+    		ComparatorChain<Key> chain = new ComparatorChain<Key>();    		
+    		for (int i = 0; i < orderBy.size(); i++) {
+    			if (orderBy.get(i).equalsIgnoreCase("title")) {
+	    			chain.addComparator(Key.KeyTitleComparator);
+	    		}
+    			if (orderBy.get(i).equalsIgnoreCase("category")) {	    		
+	    			chain.addComparator(Key.KeyCategoryComparator);
+	    		}
+    			if (orderBy.get(i).equalsIgnoreCase("username")) {	    		
+	    			chain.addComparator(Key.KeyUsernameComparator);
+	    		}
+    			if (orderBy.get(i).equalsIgnoreCase("password")) {	    		
+	    			chain.addComparator(Key.KeyPasswordComparator);
+	    		}
+    			if (orderBy.get(i).equalsIgnoreCase("url")) {	    		
+	    			chain.addComparator(Key.KeyUrlComparator);
+	    		}
+    		}
+    		if (chain.size() > 0) {
+    			Collections.sort(keys, chain);
+    		} else {
+    			Collections.sort(keys, Key.KeyDefaultComparator);
+    		}
+    	}    	
+    	return keys;    		
+    }
+    
     public List<Key> findKey(Key key) {
       List<Key> keys = new ArrayList<Key>();
       if((key.getKeyTitle() != null && key.getKeyTitle().length > 0)) {
@@ -80,6 +113,7 @@ public class KeyService {
       } else if(key.getKeyId() > -1) {
         keys = keyDao.select(key.getKeyId());
       }
+      Collections.sort(keys, Key.KeyDefaultComparator);
       return keys;
     }
     

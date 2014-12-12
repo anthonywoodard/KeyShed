@@ -62,9 +62,9 @@ public class KeyController {
       if(command.equals("new")) {
         this.doCommand(newKey(params));
       } else if(command.equals("list")) {
-        this.doCommand(listKey("table"));
+        this.doCommand(listKey("table", params));
       } else if(command.equals("llist")) {
-        this.doCommand(listKey("long"));
+        this.doCommand(listKey("long", params));
       } else if(command.equals("find")) {
         this.doCommand(findKey(params));
       } else if(command.equals("del")) {
@@ -92,8 +92,8 @@ public class KeyController {
     return keyView.doPrompt();
   }
   
-  public String listKey(String layout) {
-    List<Key> keys = keyService.getKeys();
+  public String listKey(String layout, List<String> params) {
+    List<Key> keys = keyService.listKeys(keyView.listKeys(params));
     this.keyView.showKeys(keys, layout);
     return keyView.doPrompt();
   }

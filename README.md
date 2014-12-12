@@ -1,4 +1,4 @@
-KeyShed
+KeyShed v1.1.0
 -------
 
 KeyShed is a Java-based command line tool that stores access credentials for the Mac.
@@ -64,9 +64,9 @@ CRUD Commands:
 
     * copy -i=[] or -t=[] (title must be unique. will copy password to clipboard.)
     * del -i=[] or -t=[] (title must be unique)
-    * find -i=[] or -c=[] or -t=[]
-    * list (table view)
-    * llist (list view)
+    * find -i=[] or -c=[] or -t=[] (Default Sort: Ascending by category, title)
+    * list (table view) (Default Sort: Ascending by category, title) (Optional Sort Parameters: -o=i || -o=c,p,t,u,w)
+    * llist (list view) (Default Sort: Ascending by category, title)
     * new (Required: -t=[] and -u=[] and -p=[]) (Optional: -c=[] or -w=[])
     * update (Required: -i=[]) (Optional: -c=[] or -p=[] or -u=[] or -w=[] or -t=[])
 

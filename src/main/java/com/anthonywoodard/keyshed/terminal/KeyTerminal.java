@@ -43,7 +43,7 @@ public class KeyTerminal extends Terminal implements KeyView {
   } 
 
   public Key newKey(List<String> params) {
-    HashMap hm = this.splitParams(params);
+    HashMap<String, String> hm = this.splitParams(params);
     Key newKey = new Key();
     newKey.setKeyPassword(this.encrypt((String)hm.get("p")));
     newKey.setKeyTitle(this.encrypt((String)hm.get("t")));
@@ -53,9 +53,9 @@ public class KeyTerminal extends Terminal implements KeyView {
     return newKey;
   }
   
-  private HashMap splitParams(List<String>params) {
+  private HashMap<String, String> splitParams(List<String>params) {
     HashMap<String, String> hm = new HashMap<String, String>();
-    Iterator  it = params.iterator();
+    Iterator<String>  it = params.iterator();
     while(it.hasNext()) {
       String param = (String) it.next();
       String[] kv = param.split(Constants.EQUAL);
@@ -108,7 +108,7 @@ public class KeyTerminal extends Terminal implements KeyView {
       table.addString(0, 5, "URL");
       for(int i=0; i < keys.size(); i++) {
         Key key = keys.get(i);
-        List<String>  columns = new ArrayList();
+        List<String>  columns = new ArrayList<String>();
         columns.add("" + key.getKeyId());
         columns.add(key.getKeyCategory() != null ? Ellipsize.ellipsize(this.decrypt(key.getKeyCategory()), 30) : "");            
         columns.add(key.getKeyTitle() != null ? Ellipsize.ellipsize(this.decrypt(key.getKeyTitle()), 30) : "");
@@ -125,7 +125,7 @@ public class KeyTerminal extends Terminal implements KeyView {
   }
   
   public Key findKey(List<String> params) {
-    HashMap hm = this.splitParams(params);
+    HashMap<String, String> hm = this.splitParams(params);
     Key newKey = new Key();    
     newKey.setKeyId(hm.containsKey("i") ? Integer.parseInt(hm.get("i").toString()) : -1);
     newKey.setKeyPassword(hm.containsKey("p") ? this.encrypt((String)hm.get("p")) : null);
@@ -144,7 +144,7 @@ public class KeyTerminal extends Terminal implements KeyView {
   }  
 
   public Key updateKey(List<String> params) {
-    HashMap hm = this.splitParams(params);
+    HashMap<String, String> hm = this.splitParams(params);
     Key newKey = new Key();
     newKey.setKeyId(hm.containsKey("i") ? Integer.parseInt((String)hm.get("i")) : -1);
     newKey.setKeyPassword(hm.containsKey("p") ? this.encrypt((String)hm.get("p")) : null);
@@ -156,8 +156,8 @@ public class KeyTerminal extends Terminal implements KeyView {
   }  
 
   public List<Key> importKeys(List<String> params) {
-    List<Key> keys = new ArrayList();
-    HashMap hm = this.splitParams(params);
+    List<Key> keys = new ArrayList<Key>();
+    HashMap<String, String> hm = this.splitParams(params);
     if(hm.containsKey("f")) {
       String csvFile = (String)hm.get("f");
       Boolean firstRow = false;
@@ -247,7 +247,7 @@ public class KeyTerminal extends Terminal implements KeyView {
   }
   
   public void exportKeys(List<String> params, List<Key> keys) {    
-    HashMap hm = this.splitParams(params);
+    HashMap<String, String> hm = this.splitParams(params);
     if(hm.containsKey("f")) {
       try {
         File file = new File((String)hm.get("f"));
@@ -265,7 +265,7 @@ public class KeyTerminal extends Terminal implements KeyView {
         table.addString(0, 5, "URL");
         for(int i=0; i < keys.size(); i++) {
           Key key = keys.get(i);
-          List<String>  columns = new ArrayList();
+          List<String>  columns = new ArrayList<String>();
           columns.add("" + key.getKeyId());
           columns.add(key.getKeyCategory() != null ? this.decrypt(key.getKeyCategory()) : "");            
           columns.add(key.getKeyTitle() != null ? this.decrypt(key.getKeyTitle()) : "");
@@ -283,5 +283,35 @@ public class KeyTerminal extends Terminal implements KeyView {
         logger.error(ex.toString());         
       }
     }
+  }
+  
+  public List<String> listKeys(List<String> params) {
+	  HashMap<String, String> hm = this.splitParams(params);
+	  ArrayList<String> orderBy = new ArrayList<String>();
+	  if (hm.containsKey("o")) {
+		  String v = hm.get("o");
+		  String[] kv = v.split(Constants.COMMA);
+		  for (int i = 0; i < kv.length; i++) {
+			  if (kv[i].equalsIgnoreCase("i")) {
+				  orderBy.add("id");
+			  }
+			  if (kv[i].equalsIgnoreCase("t")) {
+				  orderBy.add("title");
+			  }
+			  if (kv[i].equalsIgnoreCase("c")) {
+				  orderBy.add("category");
+			  }
+			  if (kv[i].equalsIgnoreCase("u")) {
+				  orderBy.add("username");
+			  }
+			  if (kv[i].equalsIgnoreCase("p")) {
+				  orderBy.add("password");
+			  }
+			  if (kv[i].equalsIgnoreCase("w")) {
+				  orderBy.add("url");
+			  }
+		  }
+	  }
+	  return orderBy; 
   }
 }

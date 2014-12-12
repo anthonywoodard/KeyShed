@@ -63,9 +63,7 @@ public class KeyDAOImpl implements KeyDAO {
 
   public List<Key> select() {
     JdbcTemplate select = new JdbcTemplate(dataSource);
-    return select.query("select * from tbl_key ORDER BY keyCategory, keyTitle",
-    //return select.query("select * from tbl_key ORDER BY keyId",
-      new KeyRowMapper());
+    return select.query("select * from tbl_key ORDER BY keyId", new KeyRowMapper());
   }
 
   public void delete(int id) {
